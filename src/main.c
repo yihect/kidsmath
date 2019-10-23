@@ -98,6 +98,49 @@ void print_en(struct enode *pen, FILE *fpw)
 	fprintf(fpw, "%s\n", buf);
 }
 
+void print_rule()
+{
+	FILE *fpr = fopen("rule.txt", "w+");
+	assert(fpr != NULL);
+
+	fprintf(fpr, "１，任何数，加上０，或者减去０，都等于它本身！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		5+0=5	0+7=7	9-0=9\n");
+	fprintf(fpr, "２，任何数，减去它自己，都等于０！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		4-4=0	8-8=0	0-0=0\n");
+	fprintf(fpr, "３，任意两个数相加，交互位置，结果保持不变！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		3+4=4+3=7	5+9=9+5=14\n");
+	fprintf(fpr, "４，两个数相加，拆小凑整，计算结果！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		8+5		26+37\n");
+	fprintf(fpr, "		=8+(2+3)	=(23+3)+37\n");
+	fprintf(fpr, "		=(8+2)+3	=23+(3+37)\n");
+	fprintf(fpr, "		=13		=63\n");
+	fprintf(fpr, "５，两个数相减，按减数去拆分被减数，多出来的数就是结果！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		8-5		37-24\n");
+	fprintf(fpr, "		=(3+5)-5	=(13+24)-24\n");
+	fprintf(fpr, "		=3+0		=13+(24-24)\n");
+	fprintf(fpr, "		=3		=13\n");
+	fprintf(fpr, "６，数在等号两边可移动，一边加上这个数，移过去后就是减去这个数！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		8-5=3		37-24=13\n");
+	fprintf(fpr, "		8=3+5		37=13+24\n");
+	fprintf(fpr, "		8-3=5		37-13=24\n");
+	fprintf(fpr, "		8-3-5=0		37-13-24=0\n");
+	fprintf(fpr, "		0=3+5-8\n");
+	fprintf(fpr, "７，等号两边可以同时加上或者减去一个相同的数！\n");
+	fprintf(fpr, "	例子：\n");
+	fprintf(fpr, "		8-5=3			37-24=13\n");
+	fprintf(fpr, "		8-5-1=3-1		37-24-4=13-4\n");
+	fprintf(fpr, "		8-5-1+13=3-1+13		37-24-4+7=13-4+7\n");
+
+	/* do clean work */
+	fclose(fpr);
+}
+
 int main(int argc, char **argv)
 {
 	int c = 0;
@@ -229,6 +272,8 @@ options: \n\
 
 	/* do clean work */
 	fclose(fpw);
+
+	print_rule();
 
 
 	printf("%d, %f\n", rand_int(0,100), rand_float(1));
